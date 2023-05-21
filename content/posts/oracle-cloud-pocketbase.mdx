@@ -1,0 +1,276 @@
+---
+title: 오라클 클라우드에서 PocketBase 설정하기
+description: 오라클 클라우드에서 무료로 인스턴스를 생성하고 Nginx로 PocketBase를 설정하는 방법
+date: "2023-05-21"
+---
+# 오라클 클라우드 PocketBase 설정
+
+## 오라클에서 인스턴스 생성
+
+1. 선호하는 구성과 OS로 인스턴스 생성
+2. VNIC에서 외부 IP 설정
+
+## 서버 접속 후 기본 세팅
+
+터미널에서 ssh 접속 명령어로 생성한 서버에 접속한다.
+
+```bash
+ssh ubuntu@<서버주소> -i <ssh 키 주소>
+```
+
+접속 후 업데이트와 업그레으드를 진행한다.
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+업데이트 완료 후 기본 사용자와 관리자 계정 비밀번호를 설정한다.
+
+```bash
+sudo passwd ubuntu
+```
+
+기본 사용자 비밀번호 설정
+
+```bash
+sudo passwd root
+```
+
+관리자 계정 비밀번호 설정
+
+## NGINX 설치 후 설정
+
+NGINX를 설치한다.
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+```bash
+sudo apt autoremove
+```
+
+```bash
+sudo apt install nginx
+```
+
+```bash
+sudo service nginx start
+```
+
+NGINX 실행 후 상태 확인
+
+```bash
+sudo service nginx status
+```
+
+포트 열기
+
+```bash
+sudo iptables -I INPUT 1 -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 443 -j ACCEPT
+```
+
+서버 ip 주소로 접속하여 NGINX 상태 확인
+
+정상 작동하면 SSL 설정
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+```bash
+sudo apt install python3-certbot-nginx
+```
+
+도메인 SSL 인증
+
+```bash
+certbot certonly --nginx -d pocket.moveto.kr
+```
+
+터미널에 나오는데로 입력 후 SSL 인증 마무리
+
+NGINX 설정
+
+```bash
+cd /etc/nginx/sites-enabled
+```
+
+default 파일을 Vim으로 편집
+
+```bash
+sudo vim default
+```
+
+내용 전체 삭제
+
+```bash
+gg
+```
+
+```bash
+shift + v + g
+```
+
+```bash
+d
+```
+
+아래 설정 내용 붙여넣기
+
+```bash
+# 1)
+server {
+  listen 80; # 80포트로 받을 때
+  server_name pocket.moveto.kr; # 도메인주소
+  return 301 https://pocket.moveto.kr$request_uri;
+
+}
+
+# 2)
+server {
+  listen 443 ssl http2;
+  server_name pocket.moveto.kr;
+  client_max_body_size 10000M;
+
+  # ssl 인증서 적용하기
+  ssl_certificate /etc/letsencrypt/live/pocket.moveto.kr/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/pocket.moveto.kr/privkey.pem;
+
+  location / {
+        # check http://nginx.org/en/docs/http/ngx_http_upstream_module.html#keepalive
+        proxy_set_header Connection '';
+        proxy_http_version 1.1;
+        proxy_read_timeout 360s;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # enable if you are serving under a subpath location
+        # rewrite /yourSubpath/(.*) /$1  break;
+
+        proxy_pass http://127.0.0.1:8090;
+    }
+}
+
+# 3)
+server {
+    if ($host = pocket.moveto.kr) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+  listen 80;
+  server_name pocket.moveto.kr;
+    return 404; # managed by Certbot
+}
+```
+
+NGINX 재시작
+
+```bash
+sudo systemctl restart nginx
+```
+
+## PocketBase 설치 및 설정
+
+root 사용자로 전환
+
+```bash
+su root
+```
+
+루트 디렉토리로 이동
+
+```bash
+cd ~
+```
+
+프로젝트 폴더 생성
+
+```bash
+mkdir pb
+```
+
+프로젝트 폴더 이동
+
+```bash
+cd pb
+```
+
+unzip 설치
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+```bash
+apt install unzip
+```
+
+#### PocketBase 파일 다운로드
+
+PocketBase 문서에서 최신 버전 다운로드 링크 복사
+
+[https://pocketbase.io/docs/](https://pocketbase.io/docs/)
+
+PocketBase 파일 다운로드
+
+```bash
+wget <PocketBase 파일 링크>
+```
+
+다운로드 후 압축 해제
+
+```bash
+unzip pocketbase_0.....
+```
+
+압축 해제 후 실행하여 정상 작동 확인
+
+```bash
+./pocketbase serve
+```
+
+정상 작동시 중지
+
+PocketBase systemctl 설정
+
+```bash
+sudo vim /lib/systemd/system/pocketbase.service
+```
+
+파일에 아래 내용 추가
+
+```bash
+[Unit]
+Description = pocketbase
+
+[Service]
+Type           = simple
+User           = root
+Group          = root
+LimitNOFILE    = 4096
+Restart        = always
+RestartSec     = 5s
+StandardOutput = append:/root/pb/errors.log
+StandardError  = append:/root/pb/errors.log
+ExecStart      = /root/pb/pocketbase serve
+
+[Install]
+WantedBy = multi-user.target
+```
+
+파일 저장 후 파일 등록
+
+```bash
+systemctl enable pocketbase.service
+```
+
+```bash
+systemctl start pocketbase
+```
+
+설정 완료 후 서버 ip 접속하여 작동 확인
