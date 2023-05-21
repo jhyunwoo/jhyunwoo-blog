@@ -8,8 +8,11 @@ import { ModeToggle } from "@/components/mode-toggle"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "jhyunwoo's Blog",
+  title: "jhyunwoo의 Blog",
   description: "jhyunwood의 개발 블로그",
+  other:{
+    "naver-site-verification":"b4c28f88711f54fdb70057b44ced1d05327bfe03"
+  }
 }
 
 interface RootLayoutProps {
@@ -19,7 +22,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="kr">
-      <body
+    <body
         className={`antialiased min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 ${inter.className}`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
