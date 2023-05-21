@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /exclude
+
+# Host
+Host: https://jhyunwoo.com
+
+# Sitemaps
+Sitemap: https://jhyunwoo.com/sitemap.xml
