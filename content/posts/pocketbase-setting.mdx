@@ -1,0 +1,320 @@
+---
+title: 우분투(Ubuntu)에서 Nginx 사용하여 PocketBase 설치하는 방법
+description: 우분투에서 Nginx, Certbot을 사용하여 PocketBase를 외부에서 접속하는 방법을 알아봅니다.
+date: "2023-05-23"
+---
+
+# 우분투(Ubuntu)에서 Nginx 사용하여 PocketBase 설치하는 방법
+
+오라클 클라우드에서 서버를 생성하고 PocketBase를 설치하려고 했지만 오라클 클라우드의 VNIC와 서브넷 설정 때문에 https를 PocketBase에서 제공하는 명령어로 등록할 수 없어서 Nginx와 Certbot을 사용해서 PocketBase를 오라클 클라우드에 설치하기로 하였다.
+
+## 서버 접속 후 기본 세팅
+
+터미널에서 ssh 접속 명령어로 생성한 서버에 접속한다.
+
+```bash
+ssh ubuntu@<서버주소> -i <ssh 키 주소>
+```
+
+아래 명령어로 접속 후 우분투 패키지를 업데이트하고 업그레이드도 진행한다.
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+업데이트 완료 후 기본 사용자와 관리자 계정 비밀번호를 설정한다.
+
+기본 사용자(ubuntu) 비밀번호 설정
+
+```bash
+sudo passwd ubuntu
+```
+
+관리자 계정 비밀번호 설정
+
+```bash
+sudo passwd root
+```
+
+## NGINX 설치 후 설정
+
+### Nginx 설치
+
+sudo 명령어를 사용할 일이 많기 때문에 사용자를 관리자로 변경해준다.
+
+```bash
+su root
+```
+
+NGINX를 설치하기 전 패키지를 업데이트 해준다.
+
+우분투 패키지 업데이트&업그레이드
+
+```bash
+apt update && apt upgrade -y
+```
+
+필요 없는 파일 삭제
+
+```bash
+apt autoremove
+```
+
+Nginx 설치
+
+```bash
+apt install nginx
+```
+
+Nginx 실행
+
+```bash
+service nginx start
+```
+
+NGINX 실행 후 상태 확인
+
+```bash
+sudo service nginx status
+```
+
+Nginx를 설치 후 외부에서 접속하기 위해 서버에서 필요한 포트를 열어준다.
+
+포트 열기 (80, 443 포트)
+
+```bash
+sudo iptables -I INPUT 1 -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 443 -j ACCEPT
+```
+
+공용 ip 주소로 접속하여 NGINX 가 잘 실행되고 있는지 확인한다. 만약 접속이 되지 않는다면 오라클 클라우드 웹사이트에서 인스턴스 서브넷에서도 포트를 열어야 한다.
+
+### 도메인 SSL 설정
+
+Nginx가 정상작동하면 https를 사용하기 위해 도메인 SSL을 등록한다. 도메인 등록 전 도메인 제공 업체에서 자신이 사용하고자 하는 도메인과 서버의 공용 IP를 연결해야 한다. (도메인 DNS 설정 참고)
+
+도메인 설정 후 SSL 등록을 위해 Certbot을 설치한다.
+
+Certbot 설치 전 패키지 업데이트&업그레이드
+
+```bash
+apt update && apt upgrade -y
+```
+
+Certbot 설치
+
+```bash
+apt install python3-certbot-nginx
+```
+
+Certbot을 사용하여 도메인에 SSL을 등록한다.
+
+도메인 SSL 인증
+
+```bash
+certbot certonly --nginx -d <도메인 주소>
+```
+
+예시)
+
+```bash
+certbot certonly --nginx -d pocket.jhyunwoo.com
+```
+
+위 명령어를 입력하면 터미널에 자신의 이메일 주소를 입력하고 약관 동의가 나타난다. 자신의 이메일을 입력하고 약관에 동의(y 키 입력 후 엔터) 하면 된다.
+
+### Nginx 설정
+
+등록한 도메인에 접속시 PocketBase가 뜨게 하기 위해 Nginx 설정 파일을 업데이트 해야한다.
+
+Nginx 설정 파일이 위치한 폴더로 이동
+
+```bash
+cd /etc/nginx/sites-enabled
+```
+
+default 파일을 Vim으로 편집
+
+```bash
+sudo vim default
+```
+
+기본 설정 내용은 필요 없으므로 설정을 모두 삭제한다.
+
+Vim에서 파일 내용 전체 삭제 단축키
+
+```bash
+gg
+```
+
+```bash
+shift + v + g
+```
+
+```bash
+d
+```
+
+아래 설정 내용을 붙여넣고 자신의 도메인에 맞게 변경해준다.
+
+```bash
+# 1)
+server {
+  listen 80; # 80포트로 받을 때
+  server_name pocket.jhyunwoo.com; # 도메인주소
+  return 301 https://pocket.jhyunwoo.com$request_uri;
+
+}
+
+# 2)
+server {
+  listen 443 ssl http2;
+  server_name pocket.jhyunwoo.com;
+  client_max_body_size 10000M;
+
+  # ssl 인증서 적용하기
+  ssl_certificate /etc/letsencrypt/live/pocket.jhyunwoo.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/pocket.jhyunwoo.com/privkey.pem;
+
+  location / {
+        # check http://nginx.org/en/docs/http/ngx_http_upstream_module.html#keepalive
+        proxy_set_header Connection '';
+        proxy_http_version 1.1;
+        proxy_read_timeout 360s;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # enable if you are serving under a subpath location
+        # rewrite /yourSubpath/(.*) /$1  break;
+
+        proxy_pass http://127.0.0.1:8090;
+    }
+}
+
+# 3)
+server {
+    if ($host = pocket.jhyunwoo.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+  listen 80;
+  server_name pocket.jhyunwoo.com;
+    return 404; # managed by Certbot
+}
+```
+
+설정 파일 업데이트 이후 저장한다.
+
+Nginx 설정 파일이 변경되었기 때문에 NGINX를 재시작한다.
+
+```bash
+sudo systemctl restart nginx
+```
+
+## PocketBase 설치 및 설정
+
+PocketBase를 설치하기 위해 PocketBase 파일이 위치할 폴더를 만들어준다.
+
+루트 디렉토리로 이동
+
+```bash
+cd ~
+```
+
+프로젝트 폴더 생성
+
+```bash
+mkdir pb
+```
+
+프로젝트 폴더 이동
+
+```bash
+cd pb
+```
+
+PocketBase를 설치하기 위해 압축 파일 압축을 풀어주는 unzip을 설치해준다.
+
+unzip 설치
+
+```bash
+apt update && apt upgrade -y
+```
+
+```bash
+apt install unzip
+```
+
+### PocketBase 파일 다운로드
+
+PocketBase 문서에서 자신의 서버 종류에 맞는 설치 파일 다운로드 링크를 복사한다.
+
+PocketBase 문서 주소: [https://pocketbase.io/docs/](https://pocketbase.io/docs/)
+
+복사한 주소를 wget을 사용하여 파일을 다운받는다.
+
+```bash
+wget <PocketBase 파일 링크>
+```
+
+파일을 다운받은 후 unzip으로 압축을 해제해준다.
+
+```bash
+unzip <압축 파일명(ex. pocketbase_0.16.1_linux_amd64.zip)>
+```
+
+압축 해제 후 PocketBase가 정상적으로 작동하는지 확인한다.
+
+```bash
+./pocketbase serve
+```
+
+![PocketBase 정상 작동 확인](/images/posts/pocketbase-setting/Untitled.png)
+
+이렇게 정상 작동이 확인되면 정지 시킨다.
+
+PocketBase를 터미널에서 키지 않아도 알아서 서버에서 실행시키기 위해 systemctl을 등록한다.
+
+PocketBase systemctl을 설정하기 위해 아래 명령어로 systemctl 파일을 만들어준다.
+
+```bash
+sudo vim /lib/systemd/system/pocketbase.service
+```
+
+파일에 아래 내용 추가한다.
+
+```bash
+[Unit]
+Description = pocketbase
+
+[Service]
+Type           = simple
+User           = root
+Group          = root
+LimitNOFILE    = 4096
+Restart        = always
+RestartSec     = 5s
+StandardOutput = append:/root/pb/errors.log
+StandardError  = append:/root/pb/errors.log
+ExecStart      = /root/pb/pocketbase serve
+
+[Install]
+WantedBy = multi-user.target
+```
+
+파일 저장 후 systemctl 파일을 등록해준다.
+
+```bash
+systemctl enable pocketbase.service
+```
+
+```bash
+systemctl start pocketbase
+```
+
+설정 완료 후 서버 ip 접속하여 잘 작동하는지 확인해주면 된다.
+
+PocketBase 서버 주소: https://(자신이 설정한 도메인)/\_/
