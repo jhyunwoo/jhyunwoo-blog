@@ -1,0 +1,1299 @@
+---
+title: 자바스크립트 기초
+description: 자바스크립트 기초 문법과 예제를 다루는 강의입니다.
+date: "2022-04-23"
+---
+
+# Javascript
+
+> 아래 모든 강의는 노마드 코더 ‘바닐라 JS로 크롬 앱 만들기’ 강의를 참고하여 제작하였습니다.
+
+## Day 1 - Javascript 기초 지식
+
+### 1) 자바스크립트란?
+
+- 자바스크립트는 웹페이지에 반응성을 추가하기 위해 만들어진 언어이다.
+- 자바스크립트는 인터넷의 발전에 따라 폭팔적으로 성장하였다.
+- 프론트엔드에서 사용할 수 있는 언어는 자바스크립트가 “유일”하다.
+  - 2022년 6월 12일 기준 WASM이라는 기술로 웹에서 자바스크립트 이외의 언어를 구동하는 것이 가능해졌으나 이는 자바스크립트로 제작하기 어려운 컴퓨팅 파워가 많이 필요한 서비스에 제한적으로 사용되고 있다.
+  - 2022년 6월 12일 기준 pyscript가 개발되어 파이썬을 웹을 제작하는데 사용할 수 있게 되었다. (알파 버전) ([https://pyscript.net](https://pyscript.net/))
+- 현재 자바스크립트는 매우 다양한 분야에 사용된다.
+  1. 웹페이지 제작
+  2. iOS, Android 앱 개발 (React Native [https://reactnative.dev/](https://reactnative.dev/))
+  3. 데스크탑 앱 개발 (Electron [https://www.electronjs.org/](https://www.electronjs.org/))
+  4. 인공지능 개발 (Tensorflow [https://www.tensorflow.org/js?hl=ko](https://www.tensorflow.org/js?hl=ko))
+  5. 3D 오브젝트를 활용한 웹페이지 개발 (Three.js [https://threejs.org/](https://threejs.org/))
+  6. 백앤드 개발(Node.js [https://nodejs.org/ko/](https://nodejs.org/ko/)) (Express [https://expressjs.com/](https://expressjs.com/))
+  7. 머신러닝 학습 (ml5.js [https://ml5js.org/](https://ml5js.org/))
+- 모든 브라우저에는 자바스크립트가 기본으로 설치되어 있다. (따로 설치할 필요 없다.)
+
+### 2) 자바스크립트 체험
+
+자바스크립트는 아무 세팅도 하지 않은채 우리 컴퓨터에서 실행할 수 없습니다. 그러나 다른 프로그래밍 언어와는 다르게 자바스크립트는 웹페이지를 위해 만들어진 언어이기 때문에 모든 브라우저에서 실행할 수 있습니다. 우선 자바스크립트 코드를 실행하기 위해 자신이 사용하는 브라우저를 실행합니다.
+
+브라우저가 열리면 개발자 도구를 실행합니다.
+
+- 윈도우 : 키보드 우측 상단의 F12를 누르거나 Ctrl + Shift + C를 입력
+- 맥 - 사파리: 좌측 상단 메뉴막대에서 개발자용 메뉴가 보이지 않는 경우 Safari > 환경설정을 선택하고 고급을 클릭한 다음, ‘메뉴 막대에서 개발자용 메뉴 보기’를 선택하세요.
+- 맥 - 사파리 외 : Ctrl + Shift + C를 입력
+
+개발자 도구가 열리면 개발자 도구 탭에서 ‘콘솔’ 또는 ‘Console’을 선택합니다.
+
+![Untitled](/images/posts/javascript-basic/Untitled.png)
+
+콘솔에서 간단한 자바스크립트 코드를 입력해보겠습니다.
+
+```jsx
+alert("Hello JS");
+```
+
+![Untitled](/images/posts/javascript-basic/Untitled%201.png)
+
+위 코드를 입력하고 엔터를 누르면 브라우저에서 경고창이 나타나게 됩니다.
+
+![Untitled](/images/posts/javascript-basic/Untitled%202.png)
+
+콘솔창은 자바스크립트 언어를 바로 실행시킬 수 있는 한줄형 코딩을 할 수 있습니다. 그러나 우리는 웹사이트를 만들고 코드를 저장해야 하기 때문에 브라우저 콘솔에서는 코딩을 하지 않습니다. 따라서 우리는 코드를 저장할 수 있는 자바스크립트 파일을 만들어 자바스크립트를 실행시켜보겠습니다.
+
+우선 자바스크립트 강의에 사용할 프로젝트 폴더를 생성합니다.
+
+<aside>
+💡 지금까지 터미널에서 경로를 이동하여 폴더를 생성하고 터미널에서 VS Code로 폴더를 열었는데 이 방법은 제가 개인적으로 권장하는 방법일 뿐 파일 관리자(파인더)에서 폴더 만들고 VS Code 열어서 폴더를 열어도 됩니다. 그래서 이후 문서에서는 터미널을 활용한 폴더 생성 및 VS Code 여는 방법을 서술하지 않고 폴더 생성 후 VS Code로 실행이라고만 서술합니다.
+
+</aside>
+
+VS Code로 프로젝트 폴더를 열어줍니다.
+
+<aside>
+💡 이제부터 폴더 생성, 파일 생성 과정은 생략합니다!
+
+</aside>
+
+VS Code에서 app.js 파일을 생성합니다.
+
+자바스크립트의 파일 확장자명은 .js 입니다. 파일명 뒤에 .js를 붙이면 자바스크립트 파일이 됩니다.
+
+파일 생성을 완료했으면 아까 브라우저 콘솔창에 입력했던 코드를 입력해보겠습니다.
+
+```jsx
+alert("Hello JS");
+```
+
+### 자바스크립트 파일 실행
+
+자바스크립트 파일은 단독으로 실행할 수 없습니다. 자바스크립트는 웹페이지를 위해 설계된 언어로 처음부터 HTML과 함께 쓰일 목적으로 계발되었습니다. 그래서 자바스크립트 파일은 단독으로 실행 불가합니다. (단, 이후에 다룰 Node.js에서는 단독으로 실행 가능합니다.)
+
+자바스크립트 파일을 실행시키기 위해서는 HTML 파일을 생성하고 HTML 파일에 자바스크립트 파일을 연결한 후 HTML 파일을 실행시키는 방식으로 자바스크립트를 실행해야 합니다.
+
+1. HTML 파일을 생성합니다.
+2. HTML 파일에서 ! 를 입력하면 아래와 같이 나오는데 자동완성이 보이면 엔터를 눌러 HTML 파일의 기본 틀을 생성합니다.
+
+![Untitled](/images/posts/javascript-basic/Untitled%203.png)
+
+1. 자바스크립트 파일을 HTML 파일을 연결하기 위해 <body> </body> 태그 안에 아래 태그를 입력합니다.
+
+```jsx
+<script src="파일명.js"></script>
+```
+
+ex)
+
+```jsx
+<script src="app.js"></script>
+```
+
+HTML파일을 실행시키면 아까 브라우저 콘솔에 입력했던 것처럼 알림이 나오게 됩니다.
+
+cf) HTML 파일 실행시키는 방법
+
+1. 파일 관리자(파인더)에서 프로젝트 파일 위치로 이동 후 HTML 파일을 우클릭 후 브라우저로 실행
+2. VS Code에서 F5 키를 눌러 실행시킨다.
+3. VS Code에서 파일을 드레그 해서 브라우저 탭에 넣는다. (사파리는 불가)
+
+## Day 2 - 자바스크립트 데이터 종류, 변수
+
+### 프로그래밍 언어 기본 상식
+
+프로그래밍 언어를 배우며 알아야 하는 기본 상식
+
+1. 컴퓨터는 우리 코드를 위에서 아래로 차래대로 읽는다.
+2. 코드가 작동하지 않는것은 우리 잘못이지 컴퓨터 잘못이 아니다.
+3. 코딩 초보의 실수 중 80%는 오타이다.
+4. 오류에 대한 모든 답은 구글에 있다.
+5. 컴퓨터는 계산기이다.
+
+### 자바스크립트 언어 기본 상식
+
+자바스크립트 코드에서 코드 마지막 줄에 세미콜론 (;) 이 붙은것을 볼 수 있습니다. 세미콜론은 코드의 끝을 구분하기 위해 사용하지만 세미콜론을 붙이지 않아도 코드는 실행됩니다. 따라서 세미콜론은 붙여도 되고 안붙여도 되지만 관례상 이 강의에서는 모든 코드에 세미콜론을 붙입니다.
+
+### 자바스크립트 기본 데이터
+
+1. 정수 (integer)
+
+   정수는 자바스크립트에서 int 라고 표현하며 정수를 표현하는 방법은 그냥 정수를 입력하면 됩니다.
+
+   ```jsx
+   3;
+   ```
+
+2. 실수 (float)
+
+   자바스크립트에서 실수는 float 라고 표현하며 정수를 표현 하는 방법 또한 정수 표현과 같이 그냥 실수를 입력하면 됩니다.
+
+   ```jsx
+   3.1415926535897932;
+   ```
+
+3. 문자 (string)
+
+   자바스크립트에서 문자는 str 이라고 표현하고 문자를 표현하기 위해선 ‘’ 또는 “” 안에 문자를 넣어 표현합니다.
+
+   ```jsx
+   "Beatus 화이팅";
+   "app team 화이팅";
+   ```
+
+   문자에서 주의해야 할 점은 문자를 표현하기 위해 “” 나 ‘’를 사용하는데 두개를 같이 사용할 수는 없습니다.
+
+   ```jsx
+   'Hello javascript"
+   ```
+
+### console.log()
+
+자바스크립트에서 문자나 수를 출력하는 방법에는 여러가지가 있습니다. 우리는 그 중에 alert을 사용하여 브라우저에서 우리가 원하는 값을 출력해보았습니다. 그러나 우리는 경고창(alert)을 띄우는것 말고도 다른 방식으로 출력할 수도 있습니다. 그 방법 중 가장 많이 사용하는 방법이 브라우저 콘솔창에 출력하는 것입니다.
+
+1. 브라우저에서 우리 프로젝트 파일에 있는 index.html 파일을 열고 해당 탭에서 개발자 도구를 실행합니다.
+2. 개발자 도구에서 콘솔 탭으로 이동합니다.
+
+브라우저에서 콘솔을 열었다면 다시 VS Code의 프로젝트 폴더에서 자바스크립트 파일을 보겠습니다.
+
+기존의 자바스크립트 코드를 모두 지우고 아래 코드를 예제로 입력합니다.
+
+```jsx
+console.log("Hello Beatus");
+```
+
+위 코드를 입력하고 파일을 저장한 다음 브라우저를 새로고침 하면 콘솔창에 Hello Beatus 라는 문구가 나오는 것을 볼 수 있습니다.
+
+![스크린샷 2022-05-05 오후 6.23.21.png](/images/posts/javascript-basic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-05-05_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_6.23.21.png)
+
+이렇게 경고창을 띄우지 않아도 자바스크립트 코드를 출력할 수 있습니다.
+
+### 변수
+
+변수는 데이터를 저장할 수 있는 공간입니다. 변수는 매우 자주 사용하므로 정확히 알아둘 필요가 있습니다.
+
+변수 선언
+
+파이썬과는 다르게 자바스크립트에서는 변수를 생성할 때 변수를 만든다고 선언해줘야 합니다. 변수 선언은 다음과 같이 합니다.
+
+```jsx
+const 변수 이름 = 변수에 저장할 값;
+```
+
+<aside>
+💡 이제부터 한글로 된 텍스트는 모두 자신에 맞게 변형해야 하는 부분입니다!
+
+</aside>
+
+위에 코드는 변하지 않는 값을 선언하는 코드입니다. 맨 앞에 나오는 const는 변경할 수 없는 변수를 선언할 때 사용하는 코드입니다. 변수 타입 설정 코드 뒤에는 한 칸 뛰고 변수의 이름을 설정해줍니다. 등호 (=) 뒤에는 변수에 저장할 값을 작성합니다.
+
+ex)
+
+```jsx
+const myName = "Hyunwoo";
+const myAge = 18;
+```
+
+### 변수명 짓는법
+
+1. 변수명 안에는 띄어쓰기가 포함될 수 없다.
+2. 변수명은 알파벳, 한글, 한자 등 모든 문자가 가능하다.
+3. 변수명 안에 숫자를 사용할 수 있지만 변수명은 숫자로 시작할 수 없다.
+4. 변수명 안에 특수문자를 사용할 수 있지만 특수문자로 변수명을 시작할 수 없다.
+
+<aside>
+💡 자바스크립트에서 변수의 이름을 지정할 때는 규칙이 있습니다. 자바스크립트 변수명은 관례상 띄어쓰기 다음에 있는 문자를 대문자로 바꿔 표현합니다. 이 규칙은 관례이기 때문에 반드시 따라야 하는것은 아니지만 다른 사람과 코드를 공유할 때 코드 이해에 도움이 될 수 있습니다.
+
+</aside>
+
+ex)
+
+```jsx
+const thisIsRuleOfNamingVariable = "Nice!";
+```
+
+### 변수 종류
+
+1. const
+
+   const는 자바스크립트의 기본 변수입니다. const로 생성한 변수는 변경할 수 없습니다. 그래서 코드 안에서 절대 바뀌지 않아야 할 변수를 생성할 때 사용합니다. 그러나 보안상의 이유로 변수를 자주 바꿔야 하는 경우를 제외하고는 항상 const를 사용합니다.
+
+   ex)
+
+   ```jsx
+   const thisValueCanNotBeChanged = 2022;
+   ```
+
+2. let
+
+   let은 자주 변경해야하는 변수를 선언할 때 사용하는 코드입니다. let으로 변수를 선언하는 것이 편하다고 느낄 수 있지만 보안상의 이유로 let을 사용하는 것은 최대한 줄이는것이 좋습니다.
+
+   ex)
+
+   ```jsx
+   let thisValueCanBeChanged = 228; //변수 선언
+
+   thisValueCanBeChanged = 334; //변수 값 변경
+   ```
+
+3. var
+
+   var은 let과 비슷한 형태의 변수 종류입니다. 따라서 var로 선언한 변수는 쉽게 바꿀 수 있습니다. 그러나 var은 오래된 자바스크립트 코드에서 사용된 변수의 종류로 현제는 많이 사용되지 않습니다. 따라서 절대 var 을 사용해서 변수 선언을 하지 마세요! 오래된 자바스크립트 책을 보면 var로 변수선언하는 것을 많이 볼 수 있습니다.
+
+   var을 사용하지 말라는 의미로 예시도 보여주지 않겠습니다.
+
+### 연산자 (더하기, 빼기, 곱하기, 나누기, 나머지, 제곱...)
+
+자바스크립트에서 사용하는 연산자는 파이썬과 매우 동일합니다. 파이썬 연산자를 알고 있다면 넘어가도 좋습니다. (사실 거의 모든 프로그래밍 언어의 연산자는 동일합니다.)
+
+| 종류            | 자바스크립트 연산자 |
+| --------------- | ------------------- |
+| 더하기          | +                   |
+| 빼기            | -                   |
+| 곱하기          | \*                  |
+| 나누기          | /                   |
+| 나누기 (나머지) | %                   |
+| 제곱            | \*\*                |
+
+수학과 마찬가지로 소괄호 안에 있는 식을 우선으로 계산합니다.
+
+ex)
+
+```jsx
+console.log(3 + 7); //출력값: 10
+console.log(10 - 4); //출력값: 6
+console.log(4 * 8); //출력값: 32
+console.log(13 / 5); //출력값: 2.6
+console.log(13.0 / 5); //출력값: 2.6
+console.log(13 % 5); //출력값:  3
+console.log(2 ** 3); //출력값: 8
+```
+
+문자의 연산
+
+문자 또한 연산자를 이용하여 문자를 더할 수 있습니다.
+
+ex)
+
+```jsx
+console.log("hello" + "Beatus"); //출력값: helloBeatus
+```
+
+문자 형태의 값을 다룰 때는 더하기 연산자 이외에는 다른 연산자는 사용 불가 합니다.
+
+## Day 3 - Booleans, Array, Object
+
+### Boolean (참 or 거짓)
+
+Boolean은 프로그래밍 언어에서 참과 거짓을 구분하는 값으로 변수에 저장됩니다. 예를 들어 사용자가 유료 플랜인지 무료 플랜인지 구분할 때 참과 거짓을 사용하여 구분할 수 있습니다.
+
+1. true
+
+   - 프로그래밍 언어에서 참을 의미
+   - 정수 0 이외의 모든 정수는 참
+
+   ```jsx
+   const amIStudent = true;
+   ```
+
+2. false
+
+   - 프로그래밍 언어에서 거짓을 의미
+   - 정수 0 은 거짓을 뜻함
+
+   ```jsx
+   const amITall = false;
+   ```
+
+3. null
+
+   - 값이 존재하지 않는 다는 것을 의미
+   - 수에 ‘값이 없다’ 라는 것이 할당됨
+
+   ```jsx
+   const lotteryNumber = null;
+   ```
+
+4. undefinde
+
+   - 값이 정의되지 않는다는 것을 의미
+   - 변수에 값이 할당되지 않음
+
+   ```jsx
+   const girlFriend;
+   ```
+
+### Array
+
+Array는 배열이라고도 합니다. 배열을 통해 자료를 나열할 수 있습니다.. 예를 들어 한 주의 요일을 표현하기 위해 배열을 사용하지 않는다면 다음과 같이 표현할 수 있습니다.;
+
+```jsx
+const day1 = "Mon";
+const day2 = "Tue";
+const day3 = "Wed";
+const day4 = "Thu";
+const day5 = "Fri";
+const day6 = "Sat";
+const day7 = "Sun":
+```
+
+배열을 사용하지 않으면 변수를 무려 7개나 선언해야합니다. 그러나 배열을 사용하면 다음과 같이 표현할 수 있습니다.
+
+```jsx
+const day = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+```
+
+자바스크립트 배열은 대괄호를 사용하여 감싸고 각 자료는 쉼표로 구분합니다.
+
+- 배열에서 자료 불러오기
+
+배열 day에 4번째 자료를 불러오기 위해선 다음과 같이 표현합니다.
+
+```jsx
+console.log(day[3]);
+```
+
+배열을 자료를 가져오기 위해선 배열명 뒤에 대괄호를 붙이고 안에 몇번째 자료를 가져올지 적으면 됩니다.
+
+```jsx
+배열이름[자료위치];
+```
+
+그러나 위에 예시에서는 4번째 자료를 가져오기 위해 4가 아니라 3을 넣었을까요? 그 이유는 자바스크립트는 배열에서 위치를 셀 때 1부터 시작하는 것이 아니라 0부터 시작하기 때문입니다. 이는 파이썬이나 다른 프로그래밍 언어도 마찬가지입니다. 따라서 첫번째 자료를 가져오기 위해선 0을 넣어야 하고 8번째 자료를 가져오기 위해선 7을 입력해야 합니다.
+
+- 배열에 자료 추가 (push)
+  배열에 자료를 추가하기 위해선 다음과 같이 하면 됩니다.
+  ```jsx
+  변수이름.push(자료);
+  ```
+  ex)
+  ```jsx
+  day.push("holiday");
+  ```
+- 배열에 자료를 삭제
+  배열에서 자료를 삭제하는 방법은 다양해서 생략하겠습니다.
+  인터넷을 참조하세요.
+
+### Object
+
+Object는 파이썬의 dictionary 와 같습니다. Object는 같이 묶어서 보관해야 하는 자료를 묶어 저장할 수 있게 해줍니다. Object안에 저장하는 데이터를 Property라고 합니다. 예를 들어 사용자의 이름, 이메일, 전화번호, 가입 일자를 한번에 저장하는데 사용합니다.
+
+예시로 사용자 정보를 저장하는 Object를 만들어 보겠습니다.
+
+```jsx
+const user = {
+  name: "Hyunwoo",
+  email: "jhyunwoo0228@gmail.com",
+  favFood: "Water Melon",
+};
+```
+
+이렇게 Object를 만들 수 있습니다.
+
+Object는 다음과 같이 선언합니다.
+
+```jsx
+const 오브젝트이름 ={
+	자료이름: 자료,
+	.
+	.
+	.
+};
+```
+
+자바스크립트 Object는 중괄호 안에 감싸져 있습니다.
+
+- object 안의 자료 불러오기
+  ```jsx
+  오브젝트이름.자료이름
+  또는
+  오브젝트 이름["자료이름"]
+  ```
+  ex)
+  ```jsx
+  user.name;
+  ```
+  ```jsx
+  user["favFood"];
+  ```
+- object 안의 자료 변경하기
+  ```jsx
+  배열 이름.자료 이름 = 자료;
+  ```
+  ex)
+  ```jsx
+  user.email = "jhyunwoo0228@naver.com";
+  ```
+- object 안의 Property 추가하기
+  ```jsx
+  배열 이름.배열 안에 없는 Property 이름 = 자료;
+  ```
+  ex)
+  ```jsx
+  user.favMusic = "Dear Moon";
+  ```
+
+## Day 4 - function, return, conditional
+
+### function (함수)
+
+함수는 코드에서 반복적으로 사용하는 코드를 간단히 사용할 수 있도록 툴을 만드는 것입니다. React 에서 HTML을 반환하기 위해 사용하는 것도 함수입니다. 함수는 정말 많이 사용하는 것이기 때문에 잘 배워두길 바랍니다.
+
+- function 선언
+  함수는 다음과 같이 선언합니다.
+
+  ```jsx
+  function 함수 이름(){
+  	실행할 코드;
+  };
+  ```
+
+  ex)
+
+  ```jsx
+  function sayHello() {
+    console.log("Hello Beatus");
+  }
+  ```
+
+  함수에서 특정한 값을 사용하여 일을 처리해야 하는 경우가 있습니다. 예를 들어 입력 받은 수의 제곱을 구하는 함수를 만들기 위해선 특정 값을 받아 함수에 집어 넣어야 합니다.
+  자료를 사용하는 함수는 다음과 같이 선언합니다.
+
+  ```jsx
+  function 함수이름(사용할 자료의 변수 이름){
+  	실행할 코드;
+  };
+  ```
+
+  위 함수는 실행할 코드에 사용할 자료의 변수 이름이 생략되어 이해하기 어려울 수 있으니 실제 예제를 이용하겠습니다.
+
+  ```jsx
+  function squareNum(a) {
+    const square = a * 2;
+    console.log(square);
+  }
+  ```
+
+  위 함수는 변수 한개를 입력 받아 변수의 제곱을 콘솔에 출력하는 함수입니다.
+  함수를 정의하고 나서 함수는 어떻게 사용할까요?
+  함수를 선언하고 나서 함수를 사용하기 위해 함수를 호출해야합니다.
+
+  ```jsx
+  //함수 선언
+  function squareNum(a) {
+    const square = a * 2;
+    console.log(square);
+  }
+
+  //함수 호출
+  squareNum(4);
+  ```
+
+  함수를 호출하기 위해선 함수의 이름을 적고 소괄호를 뒤에 붙여야합니다. 함수에서 변수를 사용한다면 소괄호 안에 사용할 변수를 넣어야합니다. 만약 함수에서 사용하는 변수의 개수 만큼 변수를 입력해주지 않는다면 오류가 발생합니다.
+  ex) 변수 3개를 사용하는 함수
+
+  ```jsx
+  //함수 선언
+  function averageOfNum(a, b, c){
+  	const average = (a + b + c) / 3;
+  	console.log(average);
+  }
+
+  //함수 호출
+  averageOfNum(4, 8, 24);
+  --> 결과값으로 콘솔에 12가 출력됨
+  ```
+
+      <aside>
+
+  💡 함수안의 변수는 함수 밖에서 사용하는 변수와 독립되어 있어 함수 밖에서 함수 안의 변수에 접근하거나 함수 안에서 함수 밖에 있는 변수에 접근 할 수 없습니다. 따라서 함수 밖에서 apple이라는 변수를 사용하더라도 함수 안에서 apple라는 변수를 사용할 수 있고 함수 안에서 apple이라는 변수의 값을 바꾸더라도 함수 밖의 변수에는 영향을 주지 않습니다.
+
+    </aside>
+
+  ### return (전달)
+
+  함수 안에서 구한 값을 함수 밖에서 사용하고 싶다면 어떻게 해야할까요? 함수 안에 있는 변수는 독립적이기 때문에 함수 안에서 변수 안의 값을 바꾸더라도 함수 밖에서는 해당 변수를 사용할 수 없습니다. 따라서 우리는 함수 안에서 구한 값을 함수 밖으로 꺼내줘야합니다. 이때 사용하는 것이 바로 return 입니다.
+
+  return을 사용하는 방법은 매우 간단합니다. 함수 끝에서 밖으로 꺼내고 싶은 변수를 return 끝에 적어주기만 하면 됩니다.
+
+  ```jsx
+  function addTwoNum(a, b) {
+    const sum = a + b;
+    return sum;
+  }
+  ```
+
+  위에 코드를 보면 addTwoNum 이라는 함수는 두개의 자료를 받아 더하고 더한 값 sum을 함수 밖으로 꺼내고 있습니다.
+
+  ```jsx
+  console.log(addTwoNum(4, 9));
+  ```
+
+  위에 코드를 실행하면 13이 출력됩니다. 왜냐하면 addTwoNum이라는 함수가 전달받은 두 자료를 더하고 이를 함수 밖으로 빼주었기 때문입니다. 간단히 생각하면 return을 통해 addTwoNum(4, 9)라는 함수가 14로 대체되었다 라고 생각하면 쉽습니다.
+
+  ```jsx
+  console.log(addTwoNum(4, 9));
+
+  --> console.log(13);
+  ```
+
+  ### Conditional (조건문)
+
+  코드를 짜다보면 특정 상황에만 동작해야하는 코드가 있을 수 있습니다. 우리는 이러한 경우에 조건문을 사용하여 상황을 처리합니다. 조건문은 특정 상황에서만 작동하도록 코드가 작동할 조건을 정하고 아래 코드를 작성하는 방식으로 구성되어 있습니다.
+
+  조건물을 배우기 전에 사용자에게 입력을 받을 수 있는 함수에 대해 학습하겠습니다.
+
+  사용자에게 값을 입력받기 위해선 다양한 방법이 있지만 우리는 간단한 방법인 prompt() 함수에 대해 알아보겠습니다.
+
+  prompt() 함수는 웹브라우저에 입력창을 띄워 사용자에게 입력을 받을 수 있게 하는 함수입니다.
+
+  ```jsx
+  prompt("how old are you?");
+  ```
+
+  위 코드를 실행하면 다음과 같이 나옵니다.
+
+  ![Untitled](/images/posts/javascript-basic/Untitled%204.png)
+
+  이렇게 html 파일을 실행시켰을 때 입력창이 나오게 됩니다.
+
+  그렇다면 유저가 입력한 정보를 저장하고 출력하기 위해 코드를 작성하겠습니다.
+
+  ```jsx
+  const userInput = prompt("How old are you?");
+  console.log(userInput);
+  ```
+
+  prompt 함수는 유저가 입력한 정보를 return 하기 때문에 prompt() 값을 변수에 저장하고 console.log() 함수를 통해 콘솔에 값을 출력하였습니다.
+
+  ![Untitled](/images/posts/javascript-basic/Untitled%205.png)
+
+  사용자가 입력한 값이 콘솔에 출력됨
+
+  이제 조건문에 대해 알아보겠습니다.
+
+  ```jsx
+  if(실행 할 조건){
+  	실행할 코드
+  } else{
+  	실행 조건이 아닐 때 실행할 코드
+  };
+  ```
+
+  위에 보이는 코드가 조건문의 기본 구조입니다. else는 if 안에 실행 조건이 아닐 때 실행하는 코드입니다. 만약 else가 필요 없다면 안적어도 됩니다.
+
+  ex)
+
+  ```jsx
+  if (a > 10) {
+    console.log("a is bigger than 10");
+  }
+  ```
+
+  위에 조건문은 한가지 케이스만 고려하지만 조건문 여러개를 한번에 사용할 수 있습니다. 예를 들어 시험 점수가 90 이상이면 A를 출력, 80 이상 90 미만이면 B를 출력, 70 이상 80 미만이면 C를 출력, 100을 넘거나 음수인 경우 입력값이 오류를 출력하는 경우에 조건문 여러게를 한번에 사용합니다.
+
+  ```jsx
+  if (a >= 90) {
+    console.log("A");
+  } else if (a >= 80) {
+    colsole.log("B");
+  } else if (a >= 70) {
+    console.log("C");
+  } else {
+    console.log("Your input is wrong!");
+  }
+  ```
+
+  조건문의 경우 한가지 조건에 의해 코드가 실행되면 다른 조건의 코드는 실행되지 않습니다. 따라서 위에 코드에서 a 가 90 이상이더라도 A 만 출력되고 다른 문자는 출력되지 않습니다.
+
+  자바스크립트 조건문 논리 구조 ( 위 예제 기준)
+
+  1. a = 85
+  2. 첫번째 조건을 a가 만족시키지 못하므로 다음 조건으로 이동
+  3. 두번째 조건을 a가 만족시키르모 두번째 조건 아래 코드를 실행
+  4. 조건물을 빠져나옴 ( 아래 다른 조건은 비교조차 하지 않음 → 특정 조건문에 부합하면 해당 코드를 실행하고 조건문은 종료됨)
+
+  조건문에서 한가지 조건을 비교하는 코드를 배워보았습니다. 그러나 코드를 하다보면 조건 두가지 이상을 비교해야 하는 경우가 있습니다. 예를 들어 100점 미만 90점 이상에서만 해당 코드를 작동시키는 경우가 있습니다. 우리는 이때 and 연산자 또는 or 연산자를 사용합니다.
+
+  and 연산자
+
+  조건문에서 and 연산자를 사용하면 두 조건 모두 참이여야 조건문이 해당 조건을 참으로 인식해 조건문이 작동합니다.
+
+  ```jsx
+  조건 1 && 조건 2
+  ```
+
+  위에 코드를 보면 and 연산자는 &&를 사용해서 표현합니다. and 연산자는 조건 1과 조건 2가 모두 참이여야 참으로 인식됩니다.
+
+  or 연산자
+
+  ```jsx
+  조건 1 || 조건 2
+  ```
+
+  or 연산자는 || 를 사용해서 표현합니다. or 연산자는 조건 1과 조건 2중 하나만 참이여도 참으로 인식합니다.
+
+  3개 이상의 조건 판별
+
+  ```jsx
+  조건 1 && 조건 2 && 조건 3
+  ```
+
+  위 코드와 같이 조건 1,2,3이 모두 참이여야 참으로 인식하는 조건도 만들 수 있습니다.
+
+  ex) 조건 2개를 비교하는 조건문
+
+  ```jsx
+  if (a > 90 && a <= 100) {
+    console.log("Grade A");
+  }
+  ```
+
+  a가 90 초과, 100 이하일 때 조건문을 실행하는 코드
+
+  지금까지 배운 조건문과 prompt()를 활용하여 사용자의 성적에 따라 등급을 출력하는 코드를 작성해보겠습니다.
+
+  일단 혼자 해보고 답을 보세요. 답은 아래 있습니다.
+
+  조건:
+
+  - 90점 이상 100 이하이면 A
+  - 80점 이상 90점 미만이면 B
+  - 70점 이상 80점 미만이면 C
+  - 70점 미만 0점 이상 F
+  - 그 외의 값은 오류라고 출력
+
+  입력은 prompt()를 활용합니다.
+
+  출력은 콘솔이 아니라 알림창 alert()로 해야합니다.
+
+  답)
+
+  ```jsx
+  const userInput = prompt("성적을 입력하세요:");
+  if (userInput >= 90 && userInput <= 100) {
+    alert("A");
+  } else if (userInput >= 80) {
+    alert("B");
+  } else if (userInput >= 80) {
+    alert("c");
+  } else {
+    alert("input error");
+  }
+  ```
+
+## Day 5 - Javascript in HTML
+
+자바스크립트는 웹에서 사용하기 위해 만들어진 언어인 만큼 HTML을 다룰 수 있습니다. 우선 연습을 위해 간단하게 HTML 코드를 수정해보겠습니다.
+
+아래 코드와 같이 HTML 코드를 수정하세요.
+
+index.html
+
+```jsx
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript basic</title>
+</head>
+
+<body>
+    <h1>Javascript is Fun</h1>
+    <p>자바스크립트는 문법이 마음에 안들지만 웹을 한다면 어쩔 수 없이 공부해야해요.</p>
+    <script src="app.js"></script>
+</body>
+
+</html>
+```
+
+app.js
+
+```jsx
+
+```
+
+자바스크립트 파일은 모두 지워서 아무것도 없게 해주세요.
+
+자바스크립트에서 HTML파일에 접근하기 위해선 document 라는 접근자를 사용해야 합니다. 간단한 예시로 head 태그 안에 있는 HTML titile을 변경해보겠습니다.
+
+app.js
+
+```jsx
+document.title = "Beatus";
+```
+
+자바스크립트 수정 후 저장한 다음에 브라우저를 새로고침합니다.
+
+![Untitled](/images/posts/javascript-basic/Untitled%206.png)
+
+브라우저 탭 바에 있는 제목이 바뀐 것을 볼 수 있습니다.
+
+자바스크립트로 HTML을 수정할 수도 있지만 가져올 수도 있습니다.
+
+간단한 예시로 HTML 제목을 가져와 경고창에 띄어보겠습니다.
+
+app.js
+
+```jsx
+alert(document.title);
+```
+
+브라우저에서 새로고침을 하면 경고창에 title안에 있는 문자가 뜨는것을 볼 수 있습니다.
+
+### HTML id를 사용하여 HTML가져오기
+
+자바스크립트에서 body태그 안에 있는 element를 가져오거나 수정하기 위해선 getElementByID 라는 함수를 사용합니다. getElementById 함수는 소괄호 안에 id를 지정하에 HTML안의 element를 찾을 수 있습니다.
+
+HTML 파일을 다음과 같이 수정합니다.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javascript basic</title>
+  </head>
+
+  <body>
+    <h1 id="main-title">Javascript is Fun</h1>
+    <p id="description">
+      자바스크립트는 문법이 마음에 안들지만 웹을 한다면 어쩔 수 없이
+      공부해야해요.
+    </p>
+    <script src="app.js"></script>
+  </body>
+</html>
+```
+
+app.js파일을 다음과 같이 수정합니다.
+
+```jsx
+const title = document.getElementById("main-title");
+console.log(title);
+```
+
+위 코드를 보면 HTML 파일에서 main-title이라는 아이디를 가진 element를 찾은 다음 title이라는 변수에 저장한 후 콘솔에 출력하는 코드입니다.
+
+아래 사진처럼 출력 값을 보면 main-title이라는 아이디를 가진 element 전체를 가져온 것을 볼 수 있습니다.
+
+![Untitled](/images/posts/javascript-basic/Untitled%207.png)
+
+### HTML 안의 문자 수정하기
+
+자바스크립트에서 HTML 안의 문자를 수정하기 위해선 innerText라는 선택자를 사용해야 합니다. 우선 document.getElementByID를 통해 HTML 코드를 가져온 후 innerText를 통해 HTML 코드에 있는 문자를 선택하여 바꾸는 과정을 통해 문자를 변경합니다.
+
+app.js
+
+```jsx
+document.getElementById("main-title").innerText = "Python is Fun";
+```
+
+위와 같이 코드를 수정하고 브라우저를 새로고침하면 Javascript is Fun 이 Python is Fun으로 바뀌는 것을 볼 수 있습니다. 이런 방식으로 HTML 코드를 가져온 후 HTML코드 안에서 문자를 선택한 후 바꿔준다고 생각하면 됩니다.
+
+연습 -1
+
+description 이라는 아이디를 가진 HTML 코드 안의 문자를 Hello Beatus 로 바꾸는 코드를 작성하세요. (답은 하단에 있습니다.)
+
+답
+
+```jsx
+document.getElementById("description").innerText = "Hello Beatus";
+```
+
+연습 - 2
+
+index.html 파일을 변경하지 않고 main-title이라는 아이디를 가진 HTML 코드 안에 문자를 경고창으로 띄우세요. (답은 하단에)
+
+답
+
+```jsx
+const des = document.getElementById("description").innerText;
+alert(des);
+```
+
+자바스크립트에서 HTML 코드를 가져오는 방법은 getElementByID 말고도 여러가지가 있습니다.
+
+- getELementsByClassName()
+  - 클래스 이름을 통해 HTML 코드를 가져오는 함수로 class는 주로 여럭이기때문에 많은 HTML 코드를 가져올 때 사용합니다. (array를 반환)
+- getElementsByTagName()
+  - 인터넷에서 찾아보세요 ㅎㅎ
+- querySelector()
+  - CSS에서 HTML 을 선택하는 방식으로 HTML 코드를 가져올 수 있습니다.
+  - 단 하나의 코드만 가져옵니다.
+  - 만약 다량의 코드를 가져오고 싶다면 querySelectorAll 을 사용합니다.
+    ex)
+  ```jsx
+  const apple = querySelector("#main-title");
+  ```
+
+## Day - 6 Event
+
+자바스크립트 이전에도 설명했다시피 웹 페이지를 위해 만들어진 언어입니다. 따라서 웹페이지에서 유용하게 사용할 수 있는 event 라는 것이 있습니다. event 는 HTML 파일에서 특정 한 일이 일어나면 실행하는 자바스크립트를 지정하기 위해 사용합니다.
+
+HTML파일에서 일어나는 이벤트를 가져오기 위해선 addEventListener() 함수를 사용합니다.
+
+HTML 파일에서 이벤트를 가져오기 위해선 해당 이벤트가 일어나는 HTML 코드를 가져오고 addEventListener를 추가해야 합니다.
+
+```jsx
+가져온 HTML 코드를 가져온 변수.addEventListener("이벤트 종류", 이벤트가 일어나면 실행할 함수);
+```
+
+ex)
+
+```jsx
+const element = document.getElementById("main-title");
+
+function sayHello() {
+  alert("Hello");
+}
+
+element.addEventListener("click", sayHello);
+```
+
+위 코드를 보면 main-title이라는 아이디를 가진 HTML 코드를 가져온 후 element 라는 변수에 저장합니다. Hello 라는 문구로 경고창을 보내는 함수를 선언하고 클릭 이벤트를 감지하는 addEventListener를 추가하여 main-title을 아이디로 가진 HTML 코드 부분이 클릭되면 sayHello 함수가 실행됩니다.
+
+이벤트의 종류가 click 말고도 여러가지 있습니다. 인터넷에서 찾아보는것을 추천합니다.
+
+이제부터 모든 연습 과제에 대한 기본 프리셋 파일은 비터스 깃허브 저장소에 있습니다. 과제를 하기 위해선 파일이 필요합니다.
+
+[Git&Github로 과제하기](https://www.notion.so/Git-Github-73686282025d43939f93f89e5608961e?pvs=21)
+
+연습과제 1 (DAY06EX01)
+
+([https://github.com/jhyunwoo/beatus-app-team/tree/main/Javascript/DAY06EX01](https://github.com/jhyunwoo/beatus-app-team/tree/main/Javascript/DAY06EX01))
+
+파란색 박스에 마우스 커서가 올라가면 박스 안에 문구를 Beatus로 바꾸고 커서가 박스 밖으로 나가면 박스 안의 텍스트를 다시 Hello로 바꾸는 코드를 작성하세요.
+
+답은 깃허브 저장소에
+
+### 이벤트 리스너 삭제하기
+
+이벤트 리스너를 통해 유저의 반응에 따라 실행할 함수를 지정할 수 있었습니다. 필요에 따라 이벤트 리스너를 삭제할 수도 있습니다. 이벤트를 삭제하기 위해선 removeEventListener을 통해서 이벤트를 삭제할 수 있습니다. 주의할 점이 있다면 소괄호 안에 삭제하려는 addEventListener와 똑같이 입력해야 합니다.
+
+```jsx
+const title = document.getElementById("title");
+function sayHello() {
+  alert("Hello Beatus");
+}
+//이벤트 리스너 생성
+title.addEventListener("mouseover", sayHello);
+
+//이벤트 리스너 삭제
+title.removeEventListener("mouseover", sayHello);
+```
+
+위 코드와 같이 이벤트를 삭제하기 위해선 이벤트 리스너를 등록할 때 입력한 이벤트 종류와 이벤트 발생 시 실행할 함수를 똑같이 설정해줘야 합니다.
+
+### 브라우저 창에 대한 접근자
+
+자바스크립트는 브라우저 창의 변화를 감지하여 특정 이벤트를 실행할 수 있도록 브라우저 창에 대한 접근자를 제공합니다. 브라우저 창에 대한 접근자는 window로 기본으로 제공되어 getElementById와 같은 선택자를 사용하지 않아도 됩니다.
+
+window 접근자 사용방법은 아래와 같습니다.
+
+```jsx
+window.addEventListener("이벤트종류", 실행할함수);
+```
+
+window 사용 예시로 브라우저 창의 사이즈가 변화하면 경고창을 보내는 코드를 작성해보겠습니다.
+
+```jsx
+function jsIsFun() {
+  alert("Javascript is Fun");
+}
+
+window.addEventListener("resize", jsIsFun);
+```
+
+연습 과제 02 (DAY06EX02)
+
+브라우저의 창의 크기에 따라 h1 태그 안의 문자가 바뀌는 코드를 작성하세요.
+
+조건
+
+- 브라우저 창의 가로 크기가 700 이하면 h1 태그 안 문자를 “브라우저 창의 크기가 작습니다.” 로 바뀜
+- 브라우저 창의 가로 크기가 700 초과 1000 미만이면 h1 태그 안 문자를 “브라우저 창의 크기가 적당합니다.” 로 바뀜
+- 브라우저 창의 가로 크기가 1000초과면 h1 태그 안 문자를 “브라우저 창의 크기가 너무 큽니다” 로 바뀜
+
+<aside>
+💡 이번 문제를 약간 난이도가 있는 문제입니다. 만약 풀기 어렵다면 지금까지 배운 자바스크립트 문법을 복습해보세요.
+
+</aside>
+
+## Day 7 - CSS in Javascript
+
+이번 시간에는 자바스크립트로 CSS를 수정하는 방법에 대해 알아볼겁니다. 지금까지 자바스크립트로 HTML 파일을 수정하는 것을 알아보았는데 보통은 HTML 보다 CSS를 수정하는 경우가 많습니다. 자주 사용하는 부분인 만큼 많이 반복하길 바랍니다.
+
+자바스크립트로 CSS를 수정하기 위해선 CSS를 수정하려는 HTML 코드를 불러온 다음 CSS를 수정해야 합니다. 이벤트 리스너 등록을 위해 HTML 코드를 불러온 것 처럼 CSS를 수정하기 위해 HTML 코드를 자바스크립트로 불러와야 합니다.
+
+```jsx
+const title = document.getElementById("main-title");
+```
+
+위 코드 처럼 title이라는 변수에 HTML 코드를 불러온 다음 title 변수 뒤에 .style 을 붙이면 해당 HTML 코드에 적용된 CSS 를 수정할 수 있습니다.
+
+```jsx
+title.style.스타일종류 = 새로운스타일값;
+```
+
+위 코드만 보았을 때는 이해가 어려울 수 있으니 글자 색을 바꾸는 코드를 예시로 들어보겠습니다.
+
+```jsx
+const nomalText = document.getElementById("paragraph");
+
+nomalText.style.color = "red";
+```
+
+위 코드를 보면 nomalText라는 변수에 HTML 코드를 저장한 다음 해당 HTML 코드에 적용된 CSS중 color 값을 “red” 로 변경하는 코드입니다.
+
+style 은 HTML코드에 CSS가 적용되어 있지 않더라도 CSS를 추가하여 적용하기 때문에 CSS파일에 없는 요소를 적용하거나 CSS가 적용되지 않은 HTML코드도 .style을 통해 CSS를 수정할 수 있습니다.
+
+만약 HTML코드에 CSS가 적용되어 있다면 적용된 CSS 요소를 가져올 수 있습니다.
+
+index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 7 연습과제 1</title>
+  </head>
+  <body>
+    <h1
+      id="paragraph"
+      style="background-color: tomato; color: white; margin: 20px; padding: 30px;"
+    >
+      Hello Beatus
+    </h1>
+    <script src="app.js"></script>
+  </body>
+</html>
+const paragraphCSS = document.getElementById("paragraph");
+alert(paragraphCSS.style.backgroundColor)
+```
+
+app.js
+
+```jsx
+const paragraphCSS = document.getElementById("paragraph");
+alert(paragraphCSS.style.backgroundColor);
+```
+
+위 코드를 보면 paragraph라는 아이디를 가진 HTML코드에 적용된 CSS 요소 중 배경 색을 지정하는 요소를 경고창으로 띄우는 코드입니다. 여기서 주의할 점이 CSS에 - 로 연결되는 요소(background-color, margin-left 등)는 - 를 빼고 다음 첫 글자를 대문자로 바꿔주면 됩니다.
+
+ex) background-color → backgroundColor
+
+margin-left → marginLeft
+
+연습과제 1 (DAY07EX01)
+
+마우스 커서로 파란색 박스를 클릭하면 박스의 색상을 빨간색으로 바꾸는 코드를 작성하세요.
+
+연습과제 2 (DAY07EX02)
+
+마우스 커서로 파란색 박스를 클릭하면 박스의 색상을 초록색으로 바꾸고 다시 클릭하면 파란색으로 바뀌는 코드를 작성하세요.
+
+연습과제 3 (DAY07EX03)
+
+마우스 커서로 빨간색 박스를 클릭하면 주황색, 한 번 더 클릭하면 주황색, 한 번 더 클릭하면 노란색, 한번 더 클릭하면 초록색으로 박스 색이 바뀌도록 코드를 작성하세요.
+
+연습과제 4 (DAY07EX04)
+
+브라우저 창의 가로 폭에 따라 배경 색이 바뀌는 코드를 작성하세요.
+
+- 폭 1500 초과 - 초록색
+- 폭 1500 이하 1000 초과 - 파란색
+- 폭 1000 이하 - 빨간색
+
+## Day 8 - 자바스크립트로 HTML 코드 생성
+
+지금까지 기존에 생성된 HTML코드를 가져오고 수정하는 방법을 알아보았습니다. 이번 시간에는 자바스크립트로 HTML 코드를 생성하는 방법에 대해 알아보겠습니다.
+
+자바스크립트로 HTML코드를 생성하기 위해선 createElement, appendChild 를 사용해야 합니다.
+
+우선 자바스크립트로 HTML코드를 생성하기 위해선 어디에 HTML 코드를 생성할지 지정해줘야 합니다. HTML 코드에서 코드를 추가할 위치를 지정해주기 위해 자바스크립트로 HTML 코드를 가져와 변수에 저장해줘야 합니다.
+
+```jsx
+const 변수이름 = document.getElementById("아이디이름");
+```
+
+ex)
+
+```jsx
+const list = document.getElementById("myFavList");
+```
+
+위와 같은 방법으로 HTML코드를 가져와 변수에 저장을 해준 다음 HTML 태그 중 어떤 태그를 사용하여 코드를 생성할지 지정해줘야 합니다. 이때 사용하는 것이 createElement입니다. createElement는 한 줄의 HTML 코드를 생성합니다. 우리는 createElement로 생성한 HTML 코드를 변수에 저장하여 나중에 appendChild로 HTML 코드에 생성한 코드를 추가할 것입니다.
+
+우선 createElement는 아래와 같은 방법으로 사용합니다.
+
+```jsx
+const 변수이름 = document.createElement("HTML태그이름");
+```
+
+위에 나오는 HTML태그 이름은 무조건 HTML코드에서 사용하는 태그 이름(ex. h1, span, div, button 등)으로 지정해야 합니다.
+
+ex)
+
+```jsx
+const apple = document.createElement("h3");
+```
+
+위 처럼 생성한 코드는 우리가 HTML코드 수정에서 배운 방식으로 내용을 추가해줄 수 있습니다.
+
+간단한 예시로 HTML코드 안에 들어가는 문자를 수정해보겠습니다.
+
+```jsx
+apple.innerText = "I am CNSA student but I like Apple";
+```
+
+이런식으로 생성한 HTML코드 안의 구성요소를 채워주면 됩니다.
+
+생성한 HTML코드를 HTML파일에 추가시키기 위해 appendChild를 사용해야 합니다. appendChild는 우리가 지정한 HTML코드 아래 하위 컴포넌트로 HTML코드를 추가하는 함수입니다. 말로만 하면 어려우니 간단한 예시를 보여드리겠습니다.
+
+아래 예시는 직접 따라해보길 권장합니다.
+
+아래와 같이 index.html 파일을 생성합니다.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="apple"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
+```
+
+위에 코드를 보면 body태그 안에 div 태그만 있고 다른건 없습니다. 그리고 div 태그의 아이디가 apple인 것을 볼 수 있습니다. HTML코드에 코드를 추가하기 위해 자바스크립트 파일을 만들어보겠습니다.
+
+```jsx
+const loc = document.getElementById("apple"); //코드를 추가할 HTML 코드 가져온 후 변수에 저장
+const span = document.createElement("span"); //span 태그를 가진 HTML 코드 생성
+span.innerText = "I like Javascript and React JS."; //생성한 span태그 안에 문장 생성
+loc.appendChild(span); //가져온 HTML코드의 하위 컴포넌트로 생성한 코드 삽입
+```
+
+위 코드의 주석에 달려있는 것 처럼 생성할 코드를 집어 넣을 HTML 코드를 가져온 후 HTML코드를 생성하여 지정한 위치이 집어 넣으면 됩니다.
+
+appendChild가 하는 일을 직접적으로 보기 위해 예시를 사용하겠습니다.
+
+자바스크립트를 통해 어떤 HTML코드를 가져오면 다음과 같이 보이는 코드를 가져왔을 것입니다.
+
+```jsx
+<div id="box"></div>
+```
+
+이렇게 가져온 코드에 appendChild를 통해 생성한 코드를 집어넣으면 다음과 같이 됩니다.
+
+```jsx
+<div id="box">
+  <span>Hello World</span>
+</div>
+```
+
+이런식으로 appendChild는 생성한 코드를 가져온 코드의 하위 컴포넌트로 HTML에 추가합니다.
+
+연습과제 1 (DAY08EX01)
+
+prompt로 사용자의 이름을 입력 받고 입력받은 값을 HTML페이지에 “비터스님 안녕하세요” 형식으로 보여주세요. 단, index.html파일은 수정하면 안됩니다. 오직 자바스크립트 파일만 수정하여 과제를 해결하세요.
+
+## Day 9 - 브라우저에 데이터 저장하기
+
+웹사이트를 제작하다보면 정보를 저장하고 사용해야 할 때가 있습니다. 만약 백앤드가 있다면 백앤드에 정보를 저장하면 되지만 백앤드 없이도 정보를 저장할 수 있습니다. 정보를 브라우저에 저장할 수 있는데 이 때 사용하는 것이 localStorage입니다. localStorage를 사용하면 브라우저에 텍스트 형태로 저장하여 웹페이지를 나갔다 들어와도 정보를 계속해서 사용할 수 있습니다.
+
+localStorage를 사용하는 방법은 정보를 저장하는 방법과 정보를 가져오는 방법 두가지가 있습니다.
+
+### localStorage로 데이터 저장하는 방법
+
+localstorage로 데이터를 저장하는 방법은 다음과 같습니다.
+
+```jsx
+localStorage.setItem("데이터키", 데이터);
+```
+
+로컬스토리지에 데이터를 저장히기 위해선 데이터의 키를 정해 데이터를 저장해야합니다. 왜냐하면 데이터 키가 없다면 로컬스토리지에서 데이터를 불러올 때 어떤 데이터를 불러와야 할지 특정하지 못하기 때문입니다.
+
+ex)
+
+```jsx
+localStorage.setItem("food", "pasta");
+```
+
+이런식으로 데이터를 저장하게 됩니다.
+
+localStorage에서 주의해야 할 점이 있습니다. 맨 처음에 설명했다시피 localStorage는 텍스트 형태로 데이터를 저장합니다. 따라서 자바스크립트에서 사용하는 자료형인 정수, 실수, 배열 등의 자료형을 저장한다고 하더라도 모두 텍스트 형태로 저장됩니다.
+
+```jsx
+localStorage.setItem("thisIsArray", ["hello", "world"]);
+```
+
+개발자 도구를 열어 콘솔에서 위 코드를 입력해봅니다.
+
+위 코드를 입력한 후 개발자 도구에서 애플리케이션으로 이동합니다(콘솔이 있는 쪽에서 찾으면 됩니다). 만약 어플리케이션이 안보인다면 개발자 도구가 작아서 그런것이니 아래 사진에서 메모리 옆에 보이는 화살표를 클릭하면 애플리케이션이 보입니다.
+
+![스크린샷 2022-05-22 오후 3.45.37.png](/images/posts/javascript-basic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-05-22_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_3.45.37.png)
+
+애플리케이션에서 저장용량 중 로컬 스토리지로 이동합니다.
+
+![스크린샷 2022-05-22 오후 3.46.38.png](/images/posts/javascript-basic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-05-22_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_3.46.38.png)
+
+로컬스토리지를 클릭하였을때 보이는 항목을 클릭하여 들어가면 방금 콘솔로 저장한 데이터가 보입니다.
+
+![스크린샷 2022-05-22 오후 3.46.57.png](/images/posts/javascript-basic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-05-22_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_3.46.57.png)
+
+로컬 스토리지에 저장된 값을 보면 우리는 분명 배열 행태로 데이터를 저장했지만 문자만 저장된 것을 볼 수 있습니다. 이렇게 텍스트로만 저장하게 되면 만약 데이터를 다시 불러와서 사용해야 할 때는 배열로 다시 만들어줘야 하는 번거로움이 있습니다. 이러한 번거로움을 막기 위해 데이터를 json형태로 저장할 수 있습니다.
+
+cf) json 형태 데이터
+
+json형태의 데이터는 웹사이트가 백앤드 서버와 통신할 때 사용하는 형식의 데이터로 웹사이트에서 자주 사용하는 데이터 형식입니다. 더 자세한 내용은 인터넷을 참고하세요.
+
+데이터를 json 형태로 저장하기 위해선 아래와 같이 하면 됩니다.
+
+```jsx
+localStorage.setItem("데이터키", JSON.stringify(데이터));
+```
+
+JSON.stringify를 사용하면 로컬 스토리지에 데이터를 저장할 때 데이터의 형식을 유지하여 저장할 수 있습니다.
+
+아래 보이는 데이터 삭제 버튼을 누르고 아까 시도했던 데이터를 JSON.stringify를 사용해서 다시 저장해보겠습니다.
+
+![이미지 2022. 5. 22. 오후 3.53.jpg](/images/posts/javascript-basic/%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B5_2022._5._22._%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_3.53.jpg)
+
+```jsx
+localStorage.setItem("thisIsArray", JSON.stringify(["hello", "world"]));
+```
+
+위 코드를 콘솔에 입력한 후 애플리케이션에서 데이터가 어떻게 저장되었는지 확인해봅니다.
+
+![스크린샷 2022-05-22 오후 3.55.52.png](/images/posts/javascript-basic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-05-22_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_3.55.52.png)
+
+데이터가 원래 데이터 타입인 배열로 저장된 것을 볼 수 있습니다.
+
+텍스트 데이터를 저장하는 것 외에는 JSON.stringify를 자주 사용하기 때문에 알아두는것이 좋습니다.
+
+### localStorage에서 데이터 불러오는 방법
+
+로컬 스토리지에 저장한 데이터를 불러오기 위해 localStorage.getItem 을 사용합니다. 사용방법은 아래와 같습니다.
+
+```jsx
+localStorage.getItem("데이터키");
+```
+
+로컬스토리지에 저장할 때 사용했던 데이터 키를 소괄호 안에 넣어 데이터를 가져올 수 있습니다.
+
+ex) (콘솔에 입력하세요.)
+
+```jsx
+localStorage.setItem("food", "pizza");
+```
+
+위 코드를 입력하여 로컬 스토리지에 데이터를 저장합니다.
+
+```jsx
+localStorage.getItem("food");
+```
+
+위 코드를 콘솔에 입력하면 다음과 같이 데이터를 불러온 것을 볼 수 있습니다.
+
+![스크린샷 2022-05-22 오후 4.03.52.png](/images/posts/javascript-basic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-05-22_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_4.03.52.png)
+
+이렇게 로컬 스토리지에 저장할 때 사용한 데이터 키를 통해 데이터를 가져올 수 있습니다.
+
+### 데이터 타입 보존해서 데이터 불러오기
+
+만약 데이터를 저장할 때 JSON.stringify를 통해 데이터 타입을 보존하여 데이터를 저장하였다면 데이터를 불러오는 것은 텍스트 타입과 똑같지만 불러온 데이터를 사용할 때는 처리 과정이 필요합니다.
+
+데이터를 처리할 때는 JSON.parse() 함수를 사용합니다.
+
+```jsx
+localStorage.setItem(
+  "myFavfood",
+  JSON.stringify(["학교 조식", "학교 중식", "학교 석식"])
+);
+```
+
+데이터를 위와 같이 저장하였다면
+
+```jsx
+const food = JSON.parse(localStorage.getItem("myFavFood"));
+```
+
+이렇게 처리를 한 번 해준 다음
+
+```jsx
+alert(food);
+```
+
+alert, console.log 등등을 사용해야 합니다. 만약 JSON.parse를 하지 않는다면 원래 자료형이 아닌 텍스트 그 자체로 데이터가 불러와지기 때문에 원래 자료형을 사용할 수 없습니다.
+
+JSON.parse 사용법
+
+```jsx
+JSON.parse(JONS.stringify로 저장한 데이터)
+```
+
+연습문제 1 (DAY09EX01)
+
+사용자의 이름을 입력창에 입력 받으면 사용자의 이름을 웹페이지에 출력하고 입력창을 안보이게 하세요.
+
+팁) css에서 박스를 안보이게 하려면 visibility 속성을 hidden으로 설정하면 됩니다.
+
+입력창의 값은 입력창 HTML코드를 자바스크립트를 통해 가져온 후 가져온 코드를 변수에 담고 변수.value하면 입력창이 받은 값을 사용할 수 있습니다.
+
+## 번외 - 데이터 입력했을때 브라우저가 새로고침 하는 것 막기
+
+웹사이트에서 데이터를 받을 때 엔터 키를 누르거나 버튼을 눌러서 데이터를 입력하는데 이럴 때 브라우저가 새로고침 되는 것을 볼 수 있습니다. 이럴 때는 이벤트 리스너에 등록된 함수가 받는 값을 추가하고 preventDefaule() 함수를 다음과 같이 추가해주면 됩니다.
+
+```jsx
+function submit(event){
+	event.preventDefault();
+	함수 코드...
+};
+button.addEventListener("click", submit)
+```
+
+위와 같이 이벤트 리스너를 통해 함수가 실행될 때 이벤트에 관한 정보를 받기 위해 함수에 입력 값을 하나 추가한 후 입력값에 preventDefaule()함수를 적용시켜 주면 브라우저가 새로고침하는 것을 막을 수 있습니다.
+
+## 이제 자바스크립트 기초 강의가 끝났습니다. 마지막으로 최종 과제를 해보길 바랍니다. 최종 과제는 난이도가 약간 있습니다. 화이팅 ㅎㅎ
+
+최종과제 (JSFINAL)
+
+To Do List 만들기
+
+- 입력창을 만들고 문자를 입력할 수 있게 하세요.
+- 입력창에 입력한 문자를 목록에 표시하세요.
+- 목록에 삭제 버튼을 만들어 삭제 버튼을 클릭하면 목록에 할 일이 없어지게 하세요.
+- 목록에 표시된 문장을 지울 수 있는 버튼을 만드세요.
+- 입력창에 문장을 입력하고 엔터를 누르면 입력창에 글자가 없어지도록 하세요.
+- CSS나 Tailwind CSS 를 사용하여 To Do Lis를 예쁘게 꾸며주세요.
+- localstroage를 사용하여 브라우저를 새로고침 해도 할 일 목록이 없어지지 않게 하세요.
+- 작업할 때 사용한 개인 브렌치를 깃허브에 업로드 해주세요.
+
+과제 예시 ([https://beatus-todolist.vercel.app/](https://beatus-todolist.vercel.app/))
